@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 import jsPDF from 'jspdf'
 
 
+import { Popover, Modal } from "bootstrap";
 //const pdf = new jsPDF("p", "mm", "a4");
 
 //40
@@ -13,18 +14,28 @@ var cardGenSettings = {
     valueRange: [0, 75],
     letters: ["B", "I", "N", "G", "O"],
     rows: 5,
-    center: "free",
-    cardsPerPage: 1,
     centerVal: "FREE",
     cardLoadDelay: 200, // Delay between when each card is loaded for HTML2Canvas
     onePageCardGenMethod: false,
-    batchNum: 1
+
+    cardsPerPage: 4,
+    batchNum: 1,
+    bingoTitle: 'Sample Bingo Event',
+    cardFooterText: "Card#B[B]C[C]"
 }
 
+const numberPlaceholder = 'n';
 
-var bingoCardData = []
+var bingoCardData = [
+    {
+        "B": [numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder],
+        "I": [numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder],
+        "N": [numberPlaceholder, numberPlaceholder, 'FREE', numberPlaceholder, numberPlaceholder],
+        "G": [numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder],
+        "O": [numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder, numberPlaceholder],
 
-
+    }
+]
 
 function BingoCards(props) {
     return (<CardGenSettings />)
@@ -35,13 +46,13 @@ function BingoCards(props) {
 //     <div>
 //         <h3>Time & Materials Statement of Work!!!!!!!!!!!!! (SOW) </h3>
 //         <h4>General Information</h4>
-//         <table id="tab_customers" class="table table-striped" >
+//         <table id="tab_customers" className="table table-striped" >
 //             <colgroup>
 //                 <col span="1" />
 //                 <col span="1" />
 //             </colgroup>
 //             <thead>
-//                 <tr class="warning">
+//                 <tr className="warning">
 //                     <th>SOW Creation Date</th>
 //                     <th>SOW Start Date</th>
 //                     <th>Project</th>
@@ -68,8 +79,7 @@ function BingoCards(props) {
 
 const PDFPage = () => (
     <div>
-        <h3>Time & Materials Statement of Work!!!!!!!!!!!!! (SOW) </h3>
-        <h4>General Information</h4>
+        testData
     </div>
 );
 
@@ -80,41 +90,41 @@ function generatePdf() {
 
     var target = document.getElementById('PDFTarget');
 
-    const printfromRenderedString = async () => {
-        const string = renderToString(<>
-            <PDFPage />
+    // const printfromRenderedString = async () => {
+    //     const string = renderToString(<>
+    //         <PDFPage />
 
-        </>);
+    //     </>);
 
-        console.log("test: ", string)
-
-
-        const opt = {
-            callback: function (pdf) {
-                pdf.save("Test.pdf");
-                // to open the generated PDF in browser window
-                // window.open(jsPdf.output('bloburl'));
-            },
-            margin: [10, 10, 0, 10],
-            autoPaging: 'text',
-            html2canvas: {
-                allowTaint: true,
-                dpi: 300,
-                letterRendering: true,
-                logging: false,
-                scale: 1
-            }
-        };
-        pdf.html(string, opt);
+    //     console.log("test: ", string)
 
 
-        // pdf.html(string).then(() => pdf.save('test.pdf'))
+    //     const opt = {
+    //         callback: function (pdf) {
+    //             pdf.save("Test.pdf");
+    //             // to open the generated PDF in browser window
+    //             // window.open(jsPdf.output('bloburl'));
+    //         },
+    //         margin: [10, 10, 0, 10],
+    //         autoPaging: 'text',
+    //         html2canvas: {
+    //             allowTaint: true,
+    //             dpi: 300,
+    //             letterRendering: true,
+    //             logging: false,
+    //             scale: 1
+    //         }
+    //     };
+    //     pdf.html(string, opt);
 
 
-        console.log("test: ", pdf)
+    //     // pdf.html(string).then(() => pdf.save('test.pdf'))
 
-        // pdf.save("pdf");
-    };
+
+    //     console.log("test: ", pdf)
+
+    //     // pdf.save("pdf");
+    // };
     //printfromRenderedString();
 
 
@@ -186,8 +196,8 @@ function generatePdf() {
             //const marginX = 50
             // const marginY = 100
 
-            console.log("Mrginx Test: ", pageWidth, canvasWidth, marginX)
-            console.log("Mrginx Test: ", pageWidth, canvasWidth, marginX)
+            // console.log("Mrginx Test: ", pageWidth, canvasWidth, marginX)
+            // console.log("Mrginx Test: ", pageWidth, canvasWidth, marginX)
 
 
 
@@ -245,7 +255,6 @@ function generatePdf() {
                 // to open the generated PDF in browser window
                 // window.open(jsPdf.output('bloburl'));
             },
-
             margin: [0, 50, 0, 50],
             autoPaging: 'text',
             html2canvas: {
@@ -259,74 +268,29 @@ function generatePdf() {
         console.log("test!!!", htmlElement);
         jsPdf.html(htmlElement, opt);
     }
-
-
-    // const string = renderToString(<PDFPage />);
-    // const pdf = new jsPDF("p", "mm", "a4");
-
-    // pdf.html(string);
-
-    // console.log
-    // pdf.save("pdf");
-
-
-
-    // html2canvas(target).then(function (canvas) {
-    //     //canvas.width = target.clientWidth
-    //     var jpegUrl = canvas.toDataURL("image/jpeg");
-    //     //var doc = new jsPDF('l', 'mm', [318, 210]);
-
-    //     let pdf = new jsPDF('p', 'pt', 'letter');
-    //     const opt = {
-    //         callback: function (pdf) {
-    //             pdf.save("Test.pdf");
-    //             // to open the generated PDF in browser window
-    //             // window.open(jsPdf.output('bloburl'));
-    //         },
-    //         margin: [50, 50, 0, 50],
-    //         autoPaging: 'text',
-    //         html2canvas: {
-    //             allowTaint: true,
-    //             dpi: 300,
-    //             letterRendering: true,
-    //             logging: false,
-    //             scale: .8
-    //         }
-    //     };
-
-
-    //     pdf.html(canvas, opt);
-
-
-
-    //     // pdf.addImage(jpegUrl, 'JPEG', 10, 10);
-    //     //pdf.save('sample-file.pdf');
-
-
-
-
-
-
-
-    //     /* pdf.addImage(jpegUrl, 'JPEG', 10, 10);
-    //      pdf.save('sample-file.pdf');*/
-    // });
-
 }
-
-
-
-
-
 var showSavePDFBtn = false;
 
 
 
 function CardGenSettings() {
+    const [disableInputs, setdisableInputs] = useState(false);
+
 
     const [cardsGen, setcardsGen] = useState(false);
     const [cardIdarray, setCardIdarray] = useState([]);
 
+    const [settings, setSettings] = useState({
+        batchNum: cardGenSettings.batchNum,
+        cardFooterText: cardGenSettings.cardFooterText,
+        cardAmt: 4,
+        cardsPerPage: cardGenSettings.cardsPerPage
+    });
+
+
+
+    const [cardsAmt, setCardsAmt] = useState('4');
+    const [batchNum, setbatchNum] = useState('1');
 
     //const [cardsPerPage, setcardsPerPage] = useState(1);
 
@@ -334,14 +298,10 @@ function CardGenSettings() {
     var cardsPerPage = cardGenSettings.cardsPerPage;
 
     async function PrepJSPDF(params) {
-
         if (cardsGen) {
             var c = 1;
-
             var x = Math.floor(bingoCardData.length / cardsPerPage)// + ();
             var y = bingoCardData.length % cardsPerPage;
-
-
             function setarrayOfCardID(_tempCardIdarray, timer) {
                 setTimeout(async () => {
                     console.log(timer, "setCardIdarray ", _tempCardIdarray)
@@ -349,32 +309,29 @@ function CardGenSettings() {
                     showSavePDFBtn = true;
                 }, timer);
             }
-
-
-
-
-
             var timer = 1000
             for (let pageNum = 1; pageNum <= x; pageNum++) {
                 var tempCardIdarray = [];
                 // console.log("pageNum: ", pageNum);
                 for (let c = (pageNum - 1) * cardsPerPage; c < (pageNum) * cardsPerPage; c++) {
-                    tempCardIdarray.push(c)
+                    tempCardIdarray.push(c);
                 }
                 setarrayOfCardID(tempCardIdarray, timer);
                 timer += cardGenSettings.cardLoadDelay;
                 console.log(pageNum, "val: ", tempCardIdarray);
             }
-
-
-
         }
     }
 
 
     function beginCardGen() {
-        var cardAmt = document.getElementById("npt_Amt").value;
-        var npt_batchNum = document.getElementById("npt_BatchNum").value;
+        setdisableInputs(true);
+        const cardAmt = parseInt(document.getElementById("npt_Amt").value);
+        const batchNum = parseInt(document.getElementById("npt_BatchNum").value);
+        const cardsPerPage = parseInt(document.getElementById("cardsPerPageV2").value);
+
+
+
 
         // cardsPerPage = document.getElementsByName("cardsPerPAge")
         //var cardsPerPAge;
@@ -384,15 +341,34 @@ function CardGenSettings() {
                 cardGenSettings.cardsPerPage = parseInt(radio.value);
             }
         }
-        cardsPerPage = cardGenSettings.cardsPerPage;
-        if (/^\d+$/.test(cardAmt) && typeof (cardsPerPage) == 'number' && /^\d+$/.test(cardsPerPage) && /^\d+$/.test(npt_batchNum)) {
 
-        cardGenSettings.batchNum = parseInt(npt_batchNum); 
+        console.log(cardAmt, cardsPerPage);
 
-            setcardsGen(generateCardData(Number(cardAmt), Number(cardsPerPage)));
+        cardGenSettings.cardsPerPage = cardsPerPage;
 
+        // cardsPerPage = cardGenSettings.cardsPerPage;
+        if (/^\d+$/.test(cardAmt) && typeof (cardsPerPage) == 'number'
+            && /^\d+$/.test(cardsPerPage) && /^\d+$/.test(batchNum)
+
+        ) {
+            // cardGenSettings.batchNum = parseInt(batchNum);
+            //setcardsGen(generateCardData(Number(cardAmt), Number(cardsPerPage)));
+            // alert('Beginning Card Generation", "Amount of Cards" and "Cards Per Page"');
+
+            var myModal = new Modal(document.getElementById('mainModal'));
+            myModal.show();
+
+            var myModalEl = document.getElementById('myModal')
+            // myModalEl.addEventListener('hidden.bs.modal', function (event) {
+            
+            // })
+
+
+            // setcardsGen(generateCardData(cardAmt, cardsPerPage));
         } else {
-            console.error("Invalid value type for 'cardsPerPage' or 'cardAmt'")
+            console.error("Invalid value type for 'cardsPerPage' or 'cardAmt'");
+            alert('Please provide information for the "Batch Number", "Amount of Cards" and "Cards Per Page"');
+            setdisableInputs(false);
 
         }
 
@@ -400,7 +376,49 @@ function CardGenSettings() {
 
 
     };
+    useEffect(() => {
+        cardGenSettings.cardFooterText = settings.cardFooterText;
+        cardGenSettings.batchNum = settings.batchNum;//
+        try {
+            // parseInt(document.getElementById("npt_BatchNum").value);
 
+        } catch (error) {
+
+        }
+        // document.getElementById('npt_CardCode1').value = cardGenSettings.cardFooterText;
+        console.log(settings);
+
+    }, [settings]);
+
+    useEffect(() => {
+        // document.querySelectorAll('[disabled]');
+        Array.prototype.slice.call(document.getElementsByTagName('input')).forEach(element => {
+            if (disableInputs) {
+                element.setAttribute("disabled", "");
+            } else {
+                element.removeAttribute("disabled");
+            }
+
+        });
+        Array.prototype.slice.call(document.getElementsByTagName('select')).forEach(element => {
+            if (disableInputs) {
+                element.setAttribute("disabled", "");
+            } else {
+                element.removeAttribute("disabled");
+            }
+
+        });
+
+
+
+    }, [disableInputs]);
+    useEffect(() => {
+
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new Popover(popoverTriggerEl)
+        })
+    }, []);
     useEffect(() => {
 
         if (cardsGen && !cardGenSettings.onePageCardGenMethod) {
@@ -438,87 +456,227 @@ function CardGenSettings() {
     }
 
     //const mountNode =  contentRef?.contentWindow?.document?.body
+
+    function enforceFieldLimit(e) {
+        // this.value.slice(0, 3)
+        const element = e.target
+        var elementValue = element.value;
+        // console.log(elemenValue, elemenValue > parseInt(elementMax), elementMax);
+        console.log(element.value);
+        if (element.getAttribute("data-keepValues") !== null && false) {
+            //Disabled
+            element.getAttribute("data-keepValues").split(';').forEach(element2 => {
+                if (!elementValue.includes(element2)) {
+
+                    if (element.maxLength > 0) {
+                        elementValue = elementValue.slice(0, element.maxLength - 4)
+                    }
+                    elementValue = elementValue + element2
+                    element.value = elementValue;
+                }
+
+            });
+
+        }
+
+        if (element.maxLength > 0) {
+            element.value = elementValue.slice(0, element.maxLength)
+        }
+
+
+
+
+
+        var elementValue = parseInt(element.value);
+        const elementMax = parseInt(element.max)
+        const elementMin = parseInt(element.min)
+
+        if (elementMax > 0 && elementValue > parseInt(elementMax)) {
+            element.value = elementMax;
+        }
+        if (elementMin > 0 && elementValue < elementMin) {
+            element.value = elementMin;
+        }
+
+
+        setSettings({
+            ...settings,
+            cardFooterText: document.getElementById("npt_CardCode1").value,
+            batchNum: document.getElementById("npt_BatchNum").value,
+            cardAmt: document.getElementById("npt_Amt").value,
+            cardsPerPage: document.getElementById("cardsPerPageV2").value
+        });
+
+    }
+
+
     return (
-        <div class="container">
-            <div class="row d-flex justify-content-cente pb-5">
-                <div class="col-4"></div>
-                <div class="col-4">
-                    <label for="basic-url" class="form-label">Card Settings</label>
-                </div>
-            </div>
-
-            <div class="row d-flex justify-content-cente">
-                <div class="col-4"></div>
-                <div class="col-3">
-
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="basic-url" id="lbl_Amt">Amount of Cards: </label>
-                        <input type="text" class="form-control" id="npt_Amt" aria-describedby="basic-addon3"  maxLength={'3'}/>
+        <div className="container">
+            <div class="modal fade" id="mainModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Proceed with Generation?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p style={{ fontSize: "16px" }}> Are you sure you want to generate the Bingo cards? With the settings specified, <b>{settings.cardAmt}</b> Bingo cards will be generated with <b>{settings.cardsPerPage}</b> on each page, where possible with the
+                                Card Code format <b>{settings.cardFooterText}</b>. Each page will also have <b>{cardGenSettings.bingoTitle}</b> as the title. <br /><br /> This action will create a PDF file which may take a few moments. Please confirm to proceed.
+                            </p> </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={()=> setdisableInputs(false)}>Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                onClick={() => { setcardsGen(generateCardData(parseInt(settings.cardAmt), parseInt(settings.cardsPerPage))) }}>
+                                Confirm</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-5"></div>
-
             </div>
-            <div class="row d-flex justify-content-cente">
-                <div class="col-4"></div>
-                <div class="col-4" >
 
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="cardsPerPAge1" id="lbl_AmtPerPAge">Amount Per Page: </label>
-                        <div class="input-group-text">
-                            {/* <label class="input-group-text" for="cardsPerPAge1" id="basic-addon3">1: </label> */}
+            <div className="row d-flex justify-content-center pb-5">
+                <div className="col-4">
+                    <h1 for="basic-url" className="form-label">Bingo PDF Generator</h1>
+                </div>
+            </div>
 
-                            <input name="cardsPerPAge" id="cardsPerPAge1" class="form-check-input mt-0" type="radio" value="1" aria-label="Checkbox for following text input" />
+            <div className="row d-flex justify-content-center pb-4">
+                <div className=" col-sm-6 d-flex justify-content-center">
+                    <GetBCard index={0} cardIds={[0]} cardFooterText={settings.cardFooterText} />
+                </div>
+                <div className=" col-sm-6 d-flex justify-content-center align-items-center  g-4">
+                    <div className="">
+                        <div className="row d-flex justify-content-center align-items-center">
+                            {/* <div className="col-4"></div> */}
+                            <div className="col-12">
+
+                                <div className="input-group mb-3">
+                                    <label className="input-group-text mw-auto" for="npt_Title" id="lbl_Title" >
+                                        <i className="bi bi-info-circle-fill" data-bs-container="body"
+                                            // title="Popover title" 
+                                            data-bs-content="Please enter the title to be shown at the top of the page. (Max:_40_Characters)."
+                                            data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-placement="top" > &nbsp;  </i>
+
+                                        Bingo Title: </label>
+
+                                    <input type="text" disabled className="form-control" id="npt_Title" defaultValue={cardGenSettings.bingoTitle}
+                                        onInput={(e) => { enforceFieldLimit(e); cardGenSettings.bingoTitle = e.target.value }} maxLength="40"
+                                        aria-describedby="basic-addon3" />
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="input-group-text">
-                            {/* <label class="input-group-text" for="cardsPerPAge2" id="basic-addon3">2: </label> */}
-                            <input name="cardsPerPAge" id="cardsPerPAge2" class="form-check-input mt-0" type="radio" value="2" aria-label="Checkbox for following text input" />
+
+                        <div className="row d-flex justify-content-center">
+                            {/* <div className="col-4"></div> */}
+                            <div className="col-12">
+
+                                <div className="input-group mb-3">
+                                    <label className="input-group-text mw-auto" for="npt_Amt" id="lbl_Amt" >
+                                        <i className="bi bi-info-circle-fill" data-bs-container="body"
+                                            // title="Popover title" 
+                                            data-bs-content="Please enter the amount of cards to be generated, within the range of 1-60."
+                                            data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-placement="top" > &nbsp;  </i>
+
+                                        Amount of Cards: </label>
+
+                                    <input type="number" className="form-control" id="npt_Amt" defaultValue={4}
+                                        onInput={(e) => enforceFieldLimit(e)} min="1" max="60"
+
+                                        aria-describedby="basic-addon3" />
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="input-group-text">
-                            {/* <label class="input-group-text" for="cardsPerPAge3" id="basic-addon3">2: </label>                           */}
-                            <input name="cardsPerPAge" id="cardsPerPAge3" class="form-check-input mt-0" type="radio" value="3" aria-label="Checkbox for following text input" />
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-12" >
+
+                                <div className="input-group mb-3">
+                                    <label className="input-group-text" for="cardsPerPageV2" id="lbl_AmtPerPAge">
+                                        <i className="bi bi-info-circle-fill" data-bs-container="body"
+                                            // title="Popover title" 
+                                            data-bs-content="Please specify how many cards to be generated per page. Results on the last page may vary depending on the amount of cards."
+                                            data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-placement="top" > &nbsp;  </i>
+                                        Cards Per Page: </label>
+                                    <select className="form-select" id="cardsPerPageV2" onInput={(e) => { enforceFieldLimit(e) }}>
+                                        <option value="1">One (1)</option>
+                                        <option value="2">Two (2)</option>
+                                        <option value="3">Three (3)</option>
+                                        <option value="4" selected>four (4)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="input-group-text">
-                            {/* <label class="input-group-text" for="cardsPerPAge4" id="basic-addon3">2: </label>  */}
-                            <input name="cardsPerPAge" id="cardsPerPAge4" defaultChecked class="form-check-input mt-0" type="radio" value="4" aria-label="Checkbox for following text input" />
+                        {/* <div className="row d-flex justify-content-center">
+                        <div className="col-12" >
+                            <div className="input-group mb-3">
+                                <label className="input-group-text" for="cardsPerPAge1" id="lbl_AmtPerPAge">Cards Per Page: </label>
+                                <div className="input-group-text">
+                                  
+                                    <input name="cardsPerPAge" id="cardsPerPAge1" className="form-check-input mt-0" type="radio" value="1" aria-label="Checkbox for following text input" />
+                                </div>
+
+                                <div className="input-group-text">
+                                    <input name="cardsPerPAge" id="cardsPerPAge2" className="form-check-input mt-0" type="radio" value="2" aria-label="Checkbox for following text input" />
+                                </div>
+
+                                <div className="input-group-text">
+                                    <input name="cardsPerPAge" id="cardsPerPAge3" className="form-check-input mt-0" type="radio" value="3" aria-label="Checkbox for following text input" />
+                                </div>
+
+                                <div className="input-group-text">
+                                    <input name="cardsPerPAge" id="cardsPerPAge4" defaultChecked className="form-check-input mt-0" type="radio" value="4" aria-label="Checkbox for following text input" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> */}
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-12">
+                                <div className="input-group mb-3">
+                                    <label className="input-group-text" for="npt_BatchNum" id="lbl_BatchNum">
+                                        <i className="bi bi-info-circle-fill" data-bs-container="body"
+                                            // title="Popover title" 
+                                            data-bs-content="Please provide a batch number if the cards are being generated in batches."
+                                            data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-placement="top" > &nbsp;  </i>
+                                        Batch Number: </label>
+                                    <input type="number" className="form-control" id="npt_BatchNum" defaultValue="1" aria-describedby="basic-addon3" onInput={(e) => { enforceFieldLimit(e) }} min="0" max="100" />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-12">
+                                <div className="input-group mb-3">
+                                    <label className="input-group-text" for="npt_CardCode1" id="lbl_CardCode1">
+                                        <i className="bi bi-info-circle-fill" data-bs-container="body"
+                                            // title="Popover title" 
+                                            data-bs-content="Please specify the format for the Card Code. ([B] is the placeholder for Batch Number and [C] is placeholder for the Card Number. If they are not supplied, the values are supplied automatically at the end. (Max:_30_Characters))"
+                                            data-bs-trigger="hover focus" data-bs-toggle="popover" data-bs-placement="top" > &nbsp;  </i>
+                                        Card Code: </label>
+                                    <input id="npt_CardCode1" type="text" className="form-control" data-keepValues="[B];[C]" defaultValue={settings.cardFooterText} aria-describedby="basic-addon3" onInput={(e) => { enforceFieldLimit(e) }} onBlur={(e) => enforceFieldLimit(e)} maxLength={30}
+                                    // onChange={e=>setCardFooterText(e.target.value)} 
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-4">
+                                <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={() => beginCardGen()}>Generate</button>
+                            </div>
                         </div>
 
                     </div>
-
                 </div>
-           
-                <div class="col-2"></div>
-
             </div>
-            <div class="row d-flex justify-content-cente">
-                <div class="col-4"></div>
-                <div class="col-3">
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="basic-url" id="lbl_Amt">Batch Number: </label>
-                        <input type="text" class="form-control" id="npt_BatchNum" aria-describedby="basic-addon3" maxLength={'15'}/>
-                    </div>
-
-                </div>
-                <div class="col-5"></div>
-
-            </div>
-
-
-            <div class="row d-flex justify-content-cente">
-                <div class="col-5"></div>
-                <div class="col-2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onClick={() => beginCardGen()}>Generate</button>
-
-                </div>
-                <div class="col-5"></div>
-
-            </div>
-
-
-        </div>
+        </div >
     );
 
 
@@ -563,6 +721,7 @@ function generateCardData(cardAmt, cardsPerPAge) {
 
     }
 
+    bingoCardData = []; //Clear array
 
 
     for (let x = 0; x < cardAmt; x++) {
@@ -605,7 +764,6 @@ function generateCardData(cardAmt, cardsPerPAge) {
 
         // }
 
-
         bingoCardData.push(tempbingoCardData)
     }
 
@@ -645,7 +803,114 @@ function generateCardData(cardAmt, cardsPerPAge) {
 
 
 
+function GetCardPage(props) {
 
+    const cardIds = props.cardIds;
+    var pageNum = (cardIds[0] / cardGenSettings.cardsPerPage) + 1;
+
+    try {
+
+
+        // document.getElementsByClassName('container')[0].classList.add("width: 8.5in !important")
+    } catch (error) {
+
+    }
+    return (
+        <div className="page row pb-3 pt-3 justify-content-center" >
+
+            <div id="PDFTarget" className="col-12 col-md-8">
+                <div className="row " >
+                    <div className="col-1"></div>
+                    <div className="col">
+                        <h3><b>{cardGenSettings.bingoTitle}</b> </h3>
+                        <h4><b></b> </h4>
+                    </div>
+                    <div className="col1"></div>
+                </div>
+                <div style={{ border: "1px solid black" }} className="row row-cols-1 row-cols-md-2 g-2 mb-2 mt-4 p-1 justify-content-center" >
+                    <GetBCard index={0} cardIds={cardIds} />
+                    <GetBCard index={1} cardIds={cardIds} />
+                    <GetBCard index={2} cardIds={cardIds} />
+                    <GetBCard index={3} cardIds={cardIds} />
+                </div>
+                <div className="row " >
+                    <div className="col-5"></div>
+                    <div className="col-2">
+                        {/* {pageNum} */}
+                    </div>
+                    <div className="col-5"></div>
+                </div>
+            </div>
+
+        </div>)
+};
+
+
+function GetBCard(props) {
+    var index = props.index;
+    const cardIds = props.cardIds;
+    if ('cardFooterText' in props) {
+        cardGenSettings.cardFooterText = props.cardFooterText;
+    }
+
+
+    if (!cardGenSettings.cardFooterText.includes('[B]')) {
+        cardGenSettings.cardFooterText = cardGenSettings.cardFooterText + 'B[B]'
+    }
+    if (!cardGenSettings.cardFooterText.includes('[C]')) {
+        cardGenSettings.cardFooterText = cardGenSettings.cardFooterText + 'C[C]'
+    }
+
+
+    const CardID = cardGenSettings.cardFooterText.replace('[B]', cardGenSettings.batchNum).replace('[C]', cardIds[index] + 1)
+
+
+
+
+    var cardFooter = (
+        <div className="card-footer text-mute" style={{ fontSize: "70%" }}>
+            {/* {`NWRFDBCard #B${cardGenSettings.batchNum}C${cardIds[index] + 1}`} */}
+            {CardID}
+        </div>)
+
+
+    if (cardGenSettings.cardsPerPage == 1 || bingoCardData[cardIds[0]]["B"][0] == numberPlaceholder) {
+        return (
+            <div className="col-12" >
+                <div className="card" style={{ border: '1px solid black' }}>
+                    {/* <img src="..." className="card-img-top" alt="..." /> */}
+                    <div className="card-body">
+                        <GetCard index={cardIds[0]} />
+                    </div>
+                    {cardFooter}
+                </div>
+            </div>);
+    }
+    return (<> {cardIds.length >= (index + 1) ?
+        <div className="col-6">
+            <div className="card" style={{ border: '1px solid black' }}>
+                {/* <img src="..." className="card-img-top" alt="..." /> */}
+                <div className="card-body">
+                    <GetCard index={cardIds[index]} />
+                </div>
+                {cardFooter}
+
+            </div>
+        </div>
+        :
+        <div className="col-6" style={{ visibility: "hidden", border: '1px solid black' }}>
+            <div className="card">
+                {/* <img src="..." className="card-img-top" alt="..." /> */}
+                <div className="card-body">
+                    <GetCard index={cardIds[0]} />
+                </div>
+                {cardFooter}
+
+            </div>
+        </div>
+    }  </>);
+
+}
 
 
 
@@ -665,18 +930,8 @@ function CardPage(props) {
     var cardIds = props.cardIDs;
     var fullCardIDs = props.fullCardIDs;
     var pageArray = []
-
-
-
-
-
-    console.log("Test", fullCardIDs)
-
     //(pageNum - 1) * cardsPerPage = x;
     var pageNum = (cardIds[0] / cardGenSettings.cardsPerPage) + 1;
-
-
-
 
     var now = new Date().toLocaleString().replace(",", "").replace(/:.. /, " ").replace(":", ".").replace("/", ".");
 
@@ -697,105 +952,7 @@ function CardPage(props) {
     var cardPadding = "5%"//, 0%, 10%, 60%";
 
 
-    function GetCardPage(props) {
-        var index = props.index
-        cardIds = props.index;
-        var pageNum = (cardIds[0] / cardGenSettings.cardsPerPage) + 1;
 
-        // if (!cardGenSettings.onePageCardGenMethod) {
-        //     //fullCardIDs
-
-
-
-        //     return (<>
-        //         "hiiii"
-
-        //     </>)
-
-        // }
-
-
-        return (<div class="row pb-3 pt-3" style={{ border: "1px solid black" }}>
-            <div class="col-2"></div>
-            <div id="PDFTarget" class="col-8">
-                <div class="row " >
-                    <div class="col-1"></div>
-                    <div class="col">
-                        <h3><b>Sample Event BINGO</b> </h3>
-                        <h4><b></b> </h4>
-                    </div>
-                    <div class="col1"></div>
-                </div>
-                <div style={{ border: "1px solid black" }} class="row row-cols-1 row-cols-md-2 g-2 mb-2 mt-4 p-1" >
-                    <GetBCard index={0} />
-                    <GetBCard index={1} />
-                    <GetBCard index={2} />
-                    <GetBCard index={3} />
-                </div>
-
-                <div class="row " >
-                    <div class="col-5"></div>
-                    <div class="col-2">{/*pageNum*/}</div>
-                    <div class="col-5"></div>
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>)
-    };
-
-
-    function GetBCard(props) {
-        var x = props.index;
-
-        var cardFooter = (
-            <div class="card-footer text-muted" style={{ fontSize: "70%" }}>
-                {`NWRFDBCard #B${cardGenSettings.batchNum}C${cardIds[x] + 1}`}
-            </div>)
-
-
-        if (cardGenSettings.cardsPerPage == 1) {
-
-
-
-
-            return (
-
-                <div class="col" >
-                    <div class="card" style={{ border: '1px solid black' }}>
-                        {/* <img src="..." class="card-img-top" alt="..." /> */}
-                        <div class="card-body">
-                            <GetCard index={cardIds[0]} />
-                        </div>
-                        {cardFooter}
-
-                    </div>
-                </div>);
-        }
-        return (<> {cardIds.length >= (x + 1) ?
-            <div class="col">
-                <div class="card" style={{ border: '1px solid black' }}>
-                    {/* <img src="..." class="card-img-top" alt="..." /> */}
-                    <div class="card-body">
-                        <GetCard index={cardIds[x]} />
-                    </div>
-                    {cardFooter}
-
-                </div>
-            </div>
-            :
-            <div class="col" style={{ visibility: "hidden", border: '1px solid black' }}>
-                <div class="card">
-                    {/* <img src="..." class="card-img-top" alt="..." /> */}
-                    <div class="card-body">
-                        <GetCard index={cardIds[0]} />
-                    </div>
-                    {cardFooter}
-
-                </div>
-            </div>
-        }  </>);
-
-    }
 
     useEffect(() => {
 
@@ -803,7 +960,6 @@ function CardPage(props) {
             document.getElementById("savePDFBtn").style.visibility = "visible";
         } else {
             document.getElementById("savePDFBtn").style.visibility = "hidden";
-
         }
 
     }, []);
@@ -824,10 +980,10 @@ function CardPage(props) {
             pageArray.push(tempCardIdarray)
             //setarrayOfCardID(tempCardIdarray, timer);
 
-            console.log(pageNum, "val: ", tempCardIdarray);
+            // console.log(pageNum, "val: ", tempCardIdarray);
         }
 
-        console.log("Page Array1: ", pageArray);
+        // console.log("Page Array1: ", pageArray);
 
 
         var tempCardIdarray = [];
@@ -849,15 +1005,15 @@ function CardPage(props) {
 
 
         return (<>
-            <div class="container" style={{ border: "1px solid blue" }}>
-                <div class="row">
-                    <div class="col-4">                    </div>
-                    <div class="col-4"><button id="savePDFBtn" type="button" class="btn btn-primary" onClick={() => printPDF()}>Save PDF</button></div>
+            <div className="container" style={{ minWidth: "8.5in" }}>
+                <div className="row">
+                    <div className="col-4">                    </div>
+                    <div className="col-4"><button id="savePDFBtn" type="button" className="btn btn-primary" onClick={() => printPDF()}>Save PDF</button></div>
                 </div>
 
                 {pageArray.map((element, index) => (
 
-                    <GetCardPage key={index} index={element} />
+                    <GetCardPage key={index} cardIds={element} />
 
 
                 ))}
@@ -874,27 +1030,21 @@ function CardPage(props) {
 
 
     return (<>
-        {/* <div class="container-fluid vh-100 d-flex justify-content-center align-content-center flex-wrap " style={{ border: "1px solid blue" }}> */}
-        <div class="container" style={{ border: "1px solid blue" }}>
+        {/* <div className="container-fluid vh-100 d-flex justify-content-center align-content-center flex-wrap " style={{ border: "1px solid blue" }}> */}
+        <div className="container" style={{ border: "1px solid blue" }}>
 
-            {/* <div class="row d-flex  justify-content-center" style={{ width: cardW, border: "1px solid red" }}>
-                <div class="col-4"></div>
-                <div class="col-4"></div>
+            {/* <div className="row d-flex  justify-content-center" style={{ width: cardW, border: "1px solid red" }}>
+                <div className="col-4"></div>
+                <div className="col-4"></div>
             </div> */}
 
-            <div class="row">
-                <div class="col-4">
+            <div className="row">
+                <div className="col-4">
 
                 </div>
-                <div class="col-4"><button id="savePDFBtn" type="button" class="btn btn-primary" onClick={() => printPDF()}>Save PDF</button></div>
+                <div className="col-4"><button id="savePDFBtn" type="button" className="btn btn-primary" onClick={() => printPDF()}>Save PDF</button></div>
             </div>
-
-           
-
             <getCardPage />
-
-
-
         </div>
     </>)
 
@@ -903,10 +1053,10 @@ function CardPage(props) {
 function GetCard(props) {
     var cardId = props.index
 
-    //console.log("her", bingoCardData)
+    // console.log("her", props)
     return (
 
-        <table class="table table-bordered border-dark" style={{ marginBottom: "0" }}>
+        <table className="table table-bordered border-dark" style={{ marginBottom: "0" }}>
             <thead>
                 <tr>
                     <th scope="col">{cardGenSettings.letters[0]}</th>
@@ -919,9 +1069,10 @@ function GetCard(props) {
             <tbody>
 
 
+
                 {
                     Object.keys(bingoCardData[cardId]).map((letter, letterIndex) => (
-                        <tr >
+                        <tr>
                             <td>{bingoCardData[cardId]["B"][letterIndex]}</td>
                             <td>{bingoCardData[cardId]["I"][letterIndex]}</td>
 
@@ -929,12 +1080,7 @@ function GetCard(props) {
                                 <td style={{ fontSize: "60%", justifyContent: "center" }}>{bingoCardData[cardId]["N"][letterIndex]}</td>
                                 :
                                 <td>{bingoCardData[cardId]["N"][letterIndex]}</td>
-
-
                             }
-
-
-
                             <td>{bingoCardData[cardId]["G"][letterIndex]}</td>
                             <td>{bingoCardData[cardId]["O"][letterIndex]}</td>
 
