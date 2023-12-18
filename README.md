@@ -4,7 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This application was created for the sole purpose of generating Bingo Cards in the form of PDF documents for a specific event, of which I was acquainted with the organizer.
 
-
+Currently there are two versions, existing in the two branches version1 and version2. 
++ [Version1](/../Version1/) branch will contain the application in the state in which it was initially utilised. Ver
 ## Project Criteria
 
 The request was uniquely generated Bingo Cards in the form of a printable PDF document. The following outlines the major criterias for this request:
@@ -21,8 +22,6 @@ The request was uniquely generated Bingo Cards in the form of a printable PDF do
 ## Project Timeframe
 
 The timeframe for the project was one - two days, within which several options were explored to fit the required criteria. 
-
-
 
 # About the Solution
 
