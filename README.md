@@ -4,6 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 This application was created for the sole purpose of generating Bingo Cards in the form of PDF documents for a specific event, of which I was acquainted with the organizer.
 
+> [!NOTE]
+> There is an updated version of the software in the *[Version2](/../Version2/) branch*.
 
 ## Project Criteria
 
