@@ -5,8 +5,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This application was created for the sole purpose of generating Bingo Cards in the form of PDF documents for a specific event, of which I was acquainted with the organizer.
 
 Currently there are two versions, existing in the two branches version1 and version2. 
-+ **[Version1](/../Version1/) branch** - will contain the application in the state in which it was initially utilised. 
-+ **[Version2](/../Version2/) branch** - Ver
++ **[Version1](/../Version1/) branch** - contains the application in the state in which it was initially utilised. 
++ **[Version2](/../Version2/) branch** - contains an updated version of the application which has been updated to a more useable version that enhances user-friendliness and offers greater flexibility.
+
 ## Project Criteria
 
 The request was uniquely generated Bingo Cards in the form of a printable PDF document. The following outlines the major criterias for this request:
@@ -35,14 +36,6 @@ The timeframe for the project was one - two days, within which several options w
     1. [jsPDF](https://github.com/parallax/jsPDF)
     1. [html2canvas](https://html2canvas.hertzen.com/)
 
-## To Note:
+# How to access
 
-It is important to ***note*** that due to the constraining timeframe with a high possibility that I, the developer, will be the only person interacting with the solution, the application was not properly optimized, and proper testing was not fully conducted. However, testing was conducted to ensure that the criteria were succeffully fulfilled.    
-
-## Future Plans
-
-As of right now, there are no immediate plans but in the future, this project may be revisited, optimized and put into production(most likely hosted on GitHub). 
-
-# How to use
-
-For your convenience the `build` folder was included in the repository, and as of right now this project is [hosted](https://michaelj1297.github.io).
+For your convenience the `build` folder was included in the repository, and as of right now this project is accessible via this [link](https://michaelj1297.github.io). 
